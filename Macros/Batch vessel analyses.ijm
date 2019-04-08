@@ -12,7 +12,7 @@
 
 // Requires the java-plugins:
 // - Vessel_Clusteredness.java
-// - Mask_Reflections.java
+// - Mask_white.java
 
 Dialog.create("Convolution template");
 Dialog.addMessage("Please select a convolution template, then input and output folders");
@@ -89,10 +89,12 @@ for (img=0; img<list.length; img++) {
 	//Mask specular reflections
 	run("Mask white", "number=1.96 lower=15 upper=50 enlargePx=50");
 	setBackgroundColor(0, 0, 0);
-	run("Clear", "slice");
-	run("Make Inverse");
-	roiManager("add");
-	run("Select None");
+	if (selectionType() > -1) {
+		run("Clear", "slice");
+		run("Make Inverse");
+		roiManager("add");
+		run("Select None");
+	}
 	close();
 	
 	selectWindow(list[img]);
