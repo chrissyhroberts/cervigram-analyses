@@ -1,8 +1,6 @@
-//dir1 = getDirectory("Choose Source Directory ");
-dir1 = "/Users/sigve/Desktop/Testrunde/Inn/";
+dir1 = getDirectory("Choose Source Directory ");
 list = getFileList(dir1);
-//dir2 = getDirectory("Choose Destination Directory ");
-dir2= "/Users/sigve/Desktop/Testrunde/Ut/";
+dir2 = getDirectory("Choose Destination Directory ");
 
 setBatchMode(true);
 
@@ -13,19 +11,19 @@ getDateAndTime(year, month, dayOfWeek, dayOfMonth, hour, minute, second, msec);
 
 filepath = dir2 +"resultater_Kolposkopi_"+dayOfMonth+"."+month+"_"+hour+"."+minute+".txt";
 
-skrivefil = File.open(filepath);
-print(skrivefil, "File	satMean	satMin	satMax	greenMean	greenMin	greenMax	blueMean	blueMin	blueMax");
-File.close(skrivefil);
+outputFile = File.open(filepath);
+print(outputFile, "File	satMean	satMin	satMax	greenMean	greenMin	greenMax	blueMean	blueMin	blueMax");
+File.close(outputFile);
 
 run("Set Measurements...", "area redirect=None decimal=3");
 
 
-for (bilde=0; bilde<list.length; bilde++) {
+for (img=0; img<list.length; img++) {
 	
-	open(dir1+list[bilde]);
+	open(dir1+list[img]);
 		
 	//Profiling
-	selectWindow(list[bilde]);
+	selectWindow(list[img]);
 	run("Duplicate...", "title=profiling_HSV");
 	
 	run("Colors...", "foreground=white background=black selection=yellow");
@@ -45,7 +43,7 @@ for (bilde=0; bilde<list.length; bilde++) {
 	run("Restore Selection");
 	getStatistics(tmp, sat_mean);
 	
-	selectWindow(list[bilde]);
+	selectWindow(list[img]);
 		
 	run("RGB Stack");
 	run("Convert Stack to Images");
@@ -100,7 +98,7 @@ for (bilde=0; bilde<list.length; bilde++) {
 	setThreshold(sat_min, sat_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_sat=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[bilde] + "_Sat.gif");
+	saveAs("Gif", dir2+list[img] + "_Sat.gif");
 	
 	
 	//green window
@@ -108,31 +106,31 @@ for (bilde=0; bilde<list.length; bilde++) {
 	setThreshold(green_min, green_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_green=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[bilde] + "_Green.gif");
+	saveAs("Gif", dir2+list[img] + "_Green.gif");
 	
 	//blue window
 	selectWindow("Blue");
 	setThreshold(blue_min, blue_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_blue=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[bilde] + "_Blue.gif");
+	saveAs("Gif", dir2+list[img] + "_Blue.gif");
 	
 	
 	//Intersection
-	imageCalculator("AND create", list[bilde] + "_Sat.gif",list[bilde] + "_Green.gif");
-	selectWindow(list[bilde] + "_Green.gif");
+	imageCalculator("AND create", list[img] + "_Sat.gif",list[img] + "_Green.gif");
+	selectWindow(list[img] + "_Green.gif");
 	close();
-	imageCalculator("AND create", "Result of "+list[bilde] + "_Sat.gif",list[bilde] + "_Blue.gif");
-	saveAs("Gif", dir2+list[bilde] + "_intersection.gif");
+	imageCalculator("AND create", "Result of "+list[img] + "_Sat.gif",list[img] + "_Blue.gif");
+	saveAs("Gif", dir2+list[img] + "_intersection.gif");
 	
-	selectWindow("Result of "+list[bilde] + "_Sat.gif");
+	selectWindow("Result of "+list[img] + "_Sat.gif");
 	close();
-	selectWindow(list[bilde] + "_Blue.gif");
+	selectWindow(list[img] + "_Blue.gif");
 	close();
-	selectWindow(list[bilde] + "_Sat.gif");
+	selectWindow(list[img] + "_Sat.gif");
 	close();
 	
-	selectWindow(list[bilde] + "_intersection.gif");
+	selectWindow(list[img] + "_intersection.gif");
 
 	run("Options...", "iterations="+erode+" black count=1");
 	run("Erode");
@@ -143,11 +141,11 @@ for (bilde=0; bilde<list.length; bilde++) {
 //	run("Make Binary");
 	run("Skeletonize");
 
-	saveAs("Gif", dir2+list[bilde] + "_skeleton.gif");
+	saveAs("Gif", dir2+list[img] + "_skeleton.gif");
 	close();
 
-	//skriv opp filnavn og verdier	
-	File.append(list[bilde]+"	"+sat_mean+"	"+sat_min+"	"+sat_max+"	"+green_mean+"	"+green_min+"	"+green_max+"	"+blue_mean+"	"+blue_min+"	"+blue_max, filepath);
+	//output filename and values
+	File.append(list[img]+"	"+sat_mean+"	"+sat_min+"	"+sat_max+"	"+green_mean+"	"+green_min+"	"+green_max+"	"+blue_mean+"	"+blue_min+"	"+blue_max, filepath);
 		
 	call("java.lang.System.gc");
 }
