@@ -1,3 +1,5 @@
+// This macro will output binary skeletons of blood vessels identified in a cervigram
+
 dir1 = getDirectory("Choose Source Directory ");
 list = getFileList(dir1);
 dir2 = getDirectory("Choose Destination Directory ");
