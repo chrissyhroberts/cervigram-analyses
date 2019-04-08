@@ -98,30 +98,32 @@ for (img=0; img<list.length; img++) {
 	setThreshold(sat_min, sat_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_sat=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[img] + "_Sat.gif");
-	
-	
-	//green window
-	selectWindow("Green");
-	setThreshold(green_min, green_max);
-	run("Make Binary", "thresholded remaining");
-	if (filter_green=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[img] + "_Green.gif");
-	
-	//blue window
-	selectWindow("Blue");
-	setThreshold(blue_min, blue_max);
-	run("Make Binary", "thresholded remaining");
-	if (filter_blue=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[img] + "_Blue.gif");
-	
-	
-	//Intersection
-	imageCalculator("AND create", list[img] + "_Sat.gif",list[img] + "_Green.gif");
-	selectWindow(list[img] + "_Green.gif");
-	close();
-	imageCalculator("AND create", "Result of "+list[img] + "_Sat.gif",list[img] + "_Blue.gif");
-	saveAs("Gif", dir2+list[img] + "_intersection.gif");
+	// saveAs("Gif", dir2+list[img] + "_Sat.gif");
+	rename(list[img] + "_Sat.gif");
+
+    //green window
+    selectWindow("Green");
+    setThreshold(green_min, green_max);
+    run("Make Binary", "thresholded remaining");
+    if (filter_green=="stop")  run("Invert");
+    // saveAs("Gif", dir2+list[img] + "_Green.gif");
+    rename(list[img] + "_Green.gif");
+
+    //blue window
+    selectWindow("Blue");
+    setThreshold(blue_min, blue_max);
+    run("Make Binary", "thresholded remaining");
+    if (filter_blue=="stop")  run("Invert");
+    // saveAs("Gif", dir2+list[img] + "_Blue.gif");
+    rename(list[img] + "_Blue.gif");
+
+    //Intersection
+    imageCalculator("AND create", list[img] + "_Sat.gif",list[img] + "_Green.gif");
+    selectWindow(list[img] + "_Green.gif");
+    close();
+    imageCalculator("AND create", "Result of "+list[img] + "_Sat.gif",list[img] + "_Blue.gif");
+    // saveAs("Gif", dir2+list[img] + "_intersection.gif");
+    rename(list[img] + "_intersection.gif");
 	
 	selectWindow("Result of "+list[img] + "_Sat.gif");
 	close();
