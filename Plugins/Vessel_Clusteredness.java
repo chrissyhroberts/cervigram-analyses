@@ -63,11 +63,8 @@ import ij.gui.ProgressBar;
 public class Vessel_Clusteredness implements PlugInFilter {
     private ImagePlus	imp;		// Original image
     private int			width;			// Width of the original image
-    private int			height;			// Height of the original image	
-    private int			noiseLevel;		//Threshold value noise
-    private int			minThick;		//Threshold value min
-    private int			maxThick;		//Threshold value max
-    public int			n,max,foreground;	//Number of vessels, max pixel value, foreground value
+    private int			height;			// Height of the original image
+    public int			n=0,max = 65535; //Number of vessels, max pixel value, foreground value
     private int 		flags = DOES_ALL;
     
     public int setup(String arg, ImagePlus imp){
@@ -77,11 +74,9 @@ public class Vessel_Clusteredness implements PlugInFilter {
   
   		
     public void run(ImageProcessor ip) {
-		    
-        int offset;
         width = ip.getWidth();
         height = ip.getHeight();
-        max = 65535;
+
         FileInfo fi = imp.getOriginalFileInfo();
 		
 		ImageProcessor maskIp = ip.convertToShort(false);
@@ -163,12 +158,12 @@ public class Vessel_Clusteredness implements PlugInFilter {
 		//ImagePlus clusterImage = new ImagePlus("Cluster", maskIp);
 		//clusterImage.show();
 		
-		ResultsTable rt = ResultsTable.getResultsTable();	
+		ResultsTable rt = new ResultsTable();
 		rt.showRowNumbers(false);
-		
+
 		for(int i=1;i<n;i++) {
 			rt.incrementCounter();
-			rt.addValue("Image", fi.fileName);
+//			rt.addValue("Image", fi.fileName);
 			rt.addValue("Vessel", (double)i);
 			rt.addValue("Distance_closest", (double)distClosestNeighbour[i]);
 		}
@@ -180,7 +175,7 @@ public class Vessel_Clusteredness implements PlugInFilter {
 	public void getSections(ImageProcessor src) {
 		
  		FloodFiller ff = new FloodFiller(src);
-    	n = 1;
+    	n = 0;
     	
     	loopSec:
     	for (int y= 0; y < height; y++) {
@@ -198,7 +193,7 @@ public class Vessel_Clusteredness implements PlugInFilter {
     	}
     }
     
-    private final boolean inImage (float x, float y) {
+    private boolean inImage (float x, float y) {
 		return (x >= 0) && (x < width) && (y >= 0) && (y < height);
 	}
 	

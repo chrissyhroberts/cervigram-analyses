@@ -13,6 +13,8 @@
 // Requires the java-plugins:
 // - Vessel_Clusteredness.java
 // - Mask_white.java
+// - Remove_vessels.java
+// - Select_ROI.java
 
 Dialog.create("Convolution template");
 Dialog.addMessage("Please select a convolution template, then input and output folders");
@@ -207,6 +209,7 @@ for (img=0; img<list.length; img++) {
 	run("Select None");
 
 	run("Select ROI");
+
 
 	run("Invert");
 	run("Create Selection");
