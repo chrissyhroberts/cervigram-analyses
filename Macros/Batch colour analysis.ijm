@@ -1,9 +1,6 @@
-//Works with version 1.53
-// This macro will analyse yellow sandy patches in colour cervigrams:
-//This batch macro requires the following plugins:
-//- Cervigram_ROI.java
-//- Mask_Reflections.java
-
+//This batch macro was made for ImageJ v1.53k and requires the following custom plugins:
+//- Cervigram ROI
+//- Mask reflections
 dir1 = getDirectory("Choose Source Directory ");
 list = getFileList(dir1);
 dir2 = getDirectory("Choose Destination Directory ");
@@ -152,7 +149,7 @@ for (img=0; img<list.length; img++) {
 	//Mean 34
 	//95% CI = 27 ; 41
 	//99% CI = 25 ; 43
-	//SD 17.4
+	//STD 17.4
 	filter_red = "pass";
 	red_min = red_mean + 34 - (2*17.4);
 	if (red_min > 255) red_min = 255;
@@ -163,7 +160,7 @@ for (img=0; img<list.length; img++) {
 	//The lesions needs to contain some green (red+green = yellow)
 	//Mean 29
 	//95% CI = 23.3 ; 35.4
-	//SD 16
+	//STD 16
 	filter_green = "pass";
 	green_min = green_mean + 29 - (1.5*16);
 	if (green_min > 255) green_min = 255;
@@ -174,7 +171,7 @@ for (img=0; img<list.length; img++) {
 	//The lesion shouldn't contain too much blue
 	//Mean 17.7
 	//95% CI = 11.2 ; 24.2
-	//SD 17
+	//STD 17
 	filter_blue = "pass";
 	blue_min = blue_min;
 	blue_max = blue_mean + 17.7 + (2*17);
@@ -183,7 +180,7 @@ for (img=0; img<list.length; img++) {
 	//Hue window
 	//Mean 7.4
 	//95% CI = 5.3 ; 9.5
-	//SD 5.6
+	//STD 5.6
 
 	filter_hue = "pass";
 	hue_min = hue_mean + 7.4 - (0.625*5.6);
@@ -288,22 +285,22 @@ for (img=0; img<list.length; img++) {
 
 
 	//Intersection
-	imageCalculator("AND create", list[img] + "_Hue.gif",list[img] + "_b.gif");
-	selectWindow(list[img] + "_b.gif");
+	imageCalculator("AND create", "Hue","b");
+	selectWindow("b");
 	close();
-	imageCalculator("AND create", "Result of "+list[img] + "_Hue.gif",list[img] + "_Value.gif");
-	selectWindow(list[img] + "_Value.gif");
+	imageCalculator("AND create", "Result of Hue", "Brightness");
+	selectWindow( "Brightness");
 	close();
-	imageCalculator("AND create", "Result of Result of "+list[img] + "_Hue.gif",list[img] + "_Red.gif");
-	selectWindow(list[img] + "_Red.gif");
+	imageCalculator("AND create", "Result of Result of Hue", "Red");
+	selectWindow( "Red");
 	close();
-	imageCalculator("AND create", "Result of Result of Result of "+list[img] + "_Hue.gif",list[img] + "_Green.gif");
-	selectWindow(list[img] + "_Green.gif");
+	imageCalculator("AND create", "Result of Result of Result of Hue", "Green");
+	selectWindow( "Green");
 	close();
-	imageCalculator("AND create", "Result of Result of Result of Result of "+list[img] + "_Hue.gif",list[img] + "_Blue.gif");
-	selectWindow(list[img] + "_Blue.gif");
+	imageCalculator("AND create", "Result of Result of Result of Result of Hue", "Blue");
+	selectWindow( "Blue");
 	close();
-	imageCalculator("AND create", "Result of Result of Result of Result of Result of "+list[img] + "_Hue.gif",list[img] + "_Sat.gif");
+	imageCalculator("AND create", "Result of Result of Result of Result of Result of Hue", "Saturation");
 
 	//Remove outside ROI
 	roiManager("Select", 0);
@@ -312,12 +309,12 @@ for (img=0; img<list.length; img++) {
 	run("Select None");
 	saveAs("Gif", dir2+list[img] + "_intersection.gif");
 
-	selectWindow(list[img] + "_Hue.gif");
+	selectWindow("Hue");
 	close();
-	selectWindow(list[img] + "_Sat.gif");
+	selectWindow("Saturation");
 	close();
 
-	selectWindow(list[img] + "_intersection.gif");
+	selectWindow("Result of Result of Result of Result of Result of Result of Hue");
 
 	run("Invert LUT");
 	run("Colors...", "foreground=black background=white selection=yellow");
@@ -368,13 +365,13 @@ for (img=0; img<list.length; img++) {
 
 		selectWindow("Results");
 
-		//Calculate total area
-		area = getResult("Area", 0);
+		//Beregn total areal
+		areal = getResult("Area", 0);
 		run("Clear Results");
 
-		//Echo filename and values
-		File.append(list[img]+"	"+area+"	"+ROISize+"	"+hue_mean+"	"+hue_min+"	"+hue_max+"	"+sat_mean+"	"+sat_min+"	"+sat_max+"	"+bri_mean+"	"+bri_min+"	"+bri_max+"	"+b_mean+"	"+b_min+"	"+b_max+"	"+red_mean+"	"+red_min+"	"+red_max+"	"+green_mean+"	"+green_min+"	"+green_max+"	"+blue_mean+"	"+blue_min+"	"+blue_max, filepath);
-		
+		//skriv opp filnavn og verdier
+		File.append(list[img]+"	"+areal+"	"+ROISize+"	"+hue_mean+"	"+hue_min+"	"+hue_max+"	"+sat_mean+"	"+sat_min+"	"+sat_max+"	"+bri_mean+"	"+bri_min+"	"+bri_max+"	"+b_mean+"	"+b_min+"	"+b_max+"	"+red_mean+"	"+red_min+"	"+red_max+"	"+green_mean+"	"+green_min+"	"+green_max+"	"+blue_mean+"	"+blue_min+"	"+blue_max, filepath);
+
 		call("java.lang.System.gc");
 	}
 }
