@@ -1,12 +1,12 @@
+//Works with version 1.53
+// This macro will analyse yellow sandy patches in colour cervigrams:
 //This batch macro requires the following plugins:
 //- Cervigram_ROI.java
 //- Mask_Reflections.java
 
-//dir1 = getDirectory("Choose Source Directory ");
-dir1 = "/Users/sigve/Dropbox/Dokumenter/PhD/Articles/Bustinduy.Image analysis/Input/";
+dir1 = getDirectory("Choose Source Directory ");
 list = getFileList(dir1);
-//dir2 = getDirectory("Choose Destination Directory ");
-dir2= "/Users/sigve/Dropbox/Dokumenter/PhD/Articles/Bustinduy.Image analysis/Output/";
+dir2 = getDirectory("Choose Destination Directory ");
 
 setBatchMode(true);
 

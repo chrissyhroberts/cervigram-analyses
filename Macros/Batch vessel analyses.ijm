@@ -1,4 +1,4 @@
-//Works with version 1.47
+//Works with version 1.53
 // This macro will analyse the following parameters in colour cervigrams:
 // - number of vessels identified (n)
 // - vessel clusteredness as mean distance between vessels and the SD
