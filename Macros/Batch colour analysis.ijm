@@ -237,21 +237,21 @@ for (img=0; img<list.length; img++) {
 	setThreshold(hue_min, hue_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_hue=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[img] + "_Hue.gif");
+	//saveAs("Gif", dir2+list[img] + "_Hue.gif");
 
 	//Sat window
 	selectWindow("Saturation");
 	setThreshold(sat_min, sat_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_sat=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[img] + "_Sat.gif");
+	//saveAs("Gif", dir2+list[img] + "_Sat.gif");
 
 	//Value / brightness window
 	selectWindow("Brightness");
 	setThreshold(bri_min, bri_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_bri=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[img] + "_Value.gif");
+	//saveAs("Gif", dir2+list[img] + "_Value.gif");
 
 
 	//b window
@@ -259,7 +259,7 @@ for (img=0; img<list.length; img++) {
 	setThreshold(b_min, b_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_b=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[img] + "_b.gif");
+	//saveAs("Gif", dir2+list[img] + "_b.gif");
 
 
 	//Red window
@@ -267,21 +267,21 @@ for (img=0; img<list.length; img++) {
 	setThreshold(red_min, red_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_red=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[img] + "_Red.gif");
+	//saveAs("Gif", dir2+list[img] + "_Red.gif");
 
 	//green window
 	selectWindow("Green");
 	setThreshold(green_min, green_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_green=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[img] + "_Green.gif");
+	//saveAs("Gif", dir2+list[img] + "_Green.gif");
 
 	//blue window
 	selectWindow("Blue");
 	setThreshold(blue_min, blue_max);
 	run("Make Binary", "thresholded remaining");
 	if (filter_blue=="stop")  run("Invert");
-	saveAs("Gif", dir2+list[img] + "_Blue.gif");
+	//saveAs("Gif", dir2+list[img] + "_Blue.gif");
 
 
 	//Intersection
@@ -307,7 +307,7 @@ for (img=0; img<list.length; img++) {
 	run("Make Inverse");
 	run("Clear", "slice");
 	run("Select None");
-	saveAs("Gif", dir2+list[img] + "_intersection.gif");
+	//saveAs("Gif", dir2+list[img] + "_intersection.gif");
 
 	selectWindow("Hue");
 	close();
@@ -357,23 +357,21 @@ for (img=0; img<list.length; img++) {
 		run("From ROI Manager");
 		run("Flatten");
 		saveAs("jpeg", dir2 + list[img] + "_overlay.jpg");
-
-		run("Close All");
-
-
-		//saveAs("Gif", dir2 + list[img] + "_binary_after.gif");
+		close();
 
 		selectWindow("Results");
 
 		//Beregn total areal
 		areal = getResult("Area", 0);
-		run("Clear Results");
-
+	
 		//skriv opp filnavn og verdier
 		File.append(list[img]+"	"+areal+"	"+ROISize+"	"+hue_mean+"	"+hue_min+"	"+hue_max+"	"+sat_mean+"	"+sat_min+"	"+sat_max+"	"+bri_mean+"	"+bri_min+"	"+bri_max+"	"+b_mean+"	"+b_min+"	"+b_max+"	"+red_mean+"	"+red_min+"	"+red_max+"	"+green_mean+"	"+green_min+"	"+green_max+"	"+blue_mean+"	"+blue_min+"	"+blue_max, filepath);
-
-		call("java.lang.System.gc");
+		
 	}
+
+	run("Close All");
+	run("Clear Results");
+	call("java.lang.System.gc");
 }
 
 beep();
