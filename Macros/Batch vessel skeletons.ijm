@@ -145,7 +145,7 @@ for (img=0; img<list.length; img++) {
 //	run("Make Binary");
 	run("Skeletonize");
 
-	saveAs("Gif", dir2+list[img] + "_skeleton.gif");
+	saveAs("PNG", dir2+list[img] + "_skeleton");
 	close();
 
 	//output filename and values
