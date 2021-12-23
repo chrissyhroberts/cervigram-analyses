@@ -157,8 +157,9 @@ public class Vessel_Clusteredness implements PlugInFilter {
 		
 		//ImagePlus clusterImage = new ImagePlus("Cluster", maskIp);
 		//clusterImage.show();
-		
-		ResultsTable rt = new ResultsTable();
+
+		ResultsTable rt = ResultsTable.getResultsTable(); // This works in ImageJ <= v1.52
+//		ResultsTable rt = new ResultsTable(); // This works in ImageJ  >= v1.53
 		rt.showRowNumbers(false);
 
 		for(int i=1;i<n;i++) {
@@ -168,8 +169,8 @@ public class Vessel_Clusteredness implements PlugInFilter {
 			rt.addValue("Distance_closest", (double)distClosestNeighbour[i]);
 		}
 		rt.show("Results");
-		
-		
+
+
     }
 	
 	public void getSections(ImageProcessor src) {

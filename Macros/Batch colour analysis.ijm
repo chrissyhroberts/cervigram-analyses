@@ -1,4 +1,4 @@
-//This batch macro was made for ImageJ v1.53k and requires the following custom plugins:
+//This batch macro works with ImageJ v1.52 and requires the following custom plugins:
 //- Cervigram ROI
 //- Mask reflections
 dir1 = getDirectory("Choose Source Directory ");
