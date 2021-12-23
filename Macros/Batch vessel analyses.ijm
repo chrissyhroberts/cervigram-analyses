@@ -310,7 +310,7 @@ for (img=0; img<list.length; img++) {
 
 	//Skeletonize
 	run("Skeletonize");
-	if (output_img) { saveAs("PNG", dir2_images + list[img] + "_skeleton"); }
+	saveAs("PNG", dir2_images + list[img] + "_skeleton");
 	rename("skeleton");
 	
 	//Output all vessels
