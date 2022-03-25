@@ -11,3 +11,6 @@ _Feel free to contribute to the development of this library. Pull requests are m
 - Holmen, S., Kjetland, E. F., Taylor, M., Kleppa, E., Lillebø, K., Gundersen, S. G., … Albregtsen, F. (2015). Colourimetric image analysis as a diagnostic tool in female genital schistosomiasis. Medical Engineering & Physics, 37(3), 309–314. http://doi.org/10.1016/j.medengphy.2014.12.007
 - Holmen, S., Galappaththi-Arachchige, H. N., Kleppa, E., Pillay, P., Naicker, T., Taylor, M., … Albregtsen, F. (2016). Characteristics of Blood Vessels in Female Genital Schistosomiasis: Paving the Way for Objective Diagnostics at the Point of Care. PLOS Neglected Tropical Diseases, 10(4), e0004628. http://doi.org/10.1371/journal.pntd.0004628
 - Galappaththi-Arachchige, H. N., Holmen, S., Koukounari, A., Kleppa, E., Pillay, P., Sebitloane, M., … Kjetland, E. F. (2018). Evaluating diagnostic indicators of urogenital Schistosoma haematobium infection in young women: A cross sectional study in rural South Africa. PLoS ONE, 13(2). http://doi.org/10.1371/journal.pone.0191459
+
+**PhDs based on this work**
+- Holmen, S. Computer Image Analysis as a Diagnostic Tool in Female Genital Schistosomiasis. https://www.duo.uio.no/handle/10852/58767
